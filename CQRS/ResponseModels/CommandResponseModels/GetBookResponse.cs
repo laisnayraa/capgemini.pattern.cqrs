@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 
 namespace CQRS.ResponseModels.CommandResponseModels
 {
-    public class CreateBookResponse
+    public class GetBookResponse
     {
         public Guid Id { get; set; }
         public string Titulo { get; set; }
-        public DateTime Date { get; set; }
+        public string Edicao { get; set; }
     }
 }

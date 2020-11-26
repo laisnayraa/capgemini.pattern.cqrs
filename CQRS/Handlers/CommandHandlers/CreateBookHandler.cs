@@ -1,5 +1,6 @@
-﻿using CQRS.RequestModels.CommandRequestModels;
-using CQRS.ResponseModels.CommandResponseModels;
+﻿using CQRS.Interfaces.Repository;
+using CQRS.Models;
+using CQRS.RequestModels.CommandRequestModels;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -9,18 +10,26 @@ using System.Threading.Tasks;
 
 namespace CQRS.Handlers.CommandHandlers
 {
-    public class CreateBookHandler : IRequestHandler<CreateBookRequest, CreateBookResponse>
+    public class CreateBookHandler : IRequestHandler<CreateBookRequest, string>
     {
-        public Task<CreateBookResponse> Handle(CreateBookRequest request, CancellationToken cancellationToken)
+        private readonly ICreateBookRequestRepository _repository;
+
+        public CreateBookHandler(ICreateBookRequestRepository repository)
         {
-            var result = new CreateBookResponse
+            _repository = repository;
+        }
+
+        public Task<string> Handle(CreateBookRequest request, CancellationToken cancellationToken)
+        {
+            Book book = new Book()
             {
-                Id = Guid.NewGuid(),
-                Titulo = "Domain-Driven Design: Tackling Complexity in the Heart of Software ",
-                Date = DateTime.Now
+                Titulo = request.Titulo,
+                Edicao = request.Edicao
             };
 
-            return Task.FromResult(result);
+            _repository.Create(book);
+
+            return Task.FromResult("Livro inserido com sucesso!");
         }
     }
 }

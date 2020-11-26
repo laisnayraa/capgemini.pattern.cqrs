@@ -1,6 +1,9 @@
+using CQRS.Interfaces.Repository;
+using CQRS.Repository;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -22,6 +25,12 @@ namespace CQRS
         {
             services.AddControllers();
             services.AddMediatR(Assembly.GetExecutingAssembly());
+
+            services.AddScoped<ICreateBookRequestRepository, CreateBookRequestRepository>();
+
+
+            services.AddDbContext<DataBaseContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("BooksDB")));
 
             services.AddSwaggerGen();
         }

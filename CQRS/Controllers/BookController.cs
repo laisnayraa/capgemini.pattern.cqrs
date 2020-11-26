@@ -22,17 +22,31 @@ namespace CQRS.Controllers
         }
 
         [HttpGet("getbook")]
-        public IActionResult Get([FromQuery] CreateBookRequest command)
+        public IActionResult Get([FromQuery] GetBookRequest command)
         {
-            var response = _mediator.Send(command);
-            return Ok(response);
+            try
+            {
+                var response = _mediator.Send(command);
+                return new ObjectResult(response) { StatusCode = StatusCodes.Status200OK };
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
         }
 
         [HttpPost]
         public IActionResult Create([FromBody]CreateBookRequest command)
         {
-            var response = _mediator.Send(command);
-            return Ok(response);
+            try
+            {
+                var response = _mediator.Send(command);
+                return new ObjectResult("Livro adicionado com sucesso!") { StatusCode = StatusCodes.Status201Created }; ;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
         }
     }
 }
