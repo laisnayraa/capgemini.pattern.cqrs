@@ -26,7 +26,6 @@ namespace CQRS.Repository
 
         public async Task<Book> GetById(GetBookRequest bookRequest)
         {
-            //Book query = _context.Book.Find(bookRequest.Id);
             return await Task.FromResult(_context.Set<Book>().Find(bookRequest.Id));
         }
     }

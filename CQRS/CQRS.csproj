@@ -5,8 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="RequestModels\QueryRequestModels\" />
-    <Folder Include="ResponseModels\QueryResponseModels\" />
+    <Compile Remove="4 - Application\**" />
+    <Content Remove="4 - Application\**" />
+    <EmbeddedResource Remove="4 - Application\**" />
+    <None Remove="4 - Application\**" />
   </ItemGroup>
 
   <ItemGroup>
